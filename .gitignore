@@ -357,3 +357,5 @@ MigrationBackup/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+D000_MAPINFO*
+COLITEST.bin*
