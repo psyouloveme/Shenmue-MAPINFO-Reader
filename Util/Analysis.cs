@@ -3,6 +3,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Collections.Generic;
+using mapinforeader.Models;
+using mapinforeader.Models.MapinfoSections;
 
 namespace mapinforeader.Util
 {
@@ -441,6 +443,46 @@ namespace mapinforeader.Util
                 });
             }
         }
+
+        public static void DumpMapinfoSectionToFile(MapinfoSection mapInfo, BinaryReader reader, string outputPath) {
+          if (String.IsNullOrWhiteSpace(mapInfo.Header)) {
+            Console.WriteLine("Got an empty header string, not writing section");
+            return;
+          }
+          string filePath = System.IO.Path.Join(outputPath, $"{mapInfo.Header}.bin");
+            int sizeInt = Convert.ToInt32(mapInfo.Size);
+          reader.BaseStream.Seek(mapInfo.HeaderOffset, SeekOrigin.Begin);
+          using (FileStream l = File.Open(filePath, FileMode.Create)) {
+            using (BinaryWriter sw = new BinaryWriter(l)) {
+              sw.Write(reader.ReadBytes(sizeInt));
+            }
+          }
+        }
+        public static void DumpMapinfoToDirectory(Mapinfo m, BinaryReader reader, string outputDirPath) {
+          var outputExists = SMFileUtils.FileExists(outputDirPath); 
+          // if the output path exists and isn't a directory, stop
+          if (outputExists && !SMFileUtils.IsDirectory(outputDirPath)) {
+            return;
+          } else if (m == null) {
+            return;
+          }
+          if (!outputExists) {
+            System.IO.Directory.CreateDirectory(outputDirPath);
+          }
+          foreach (var mi in m.Sections) {
+            DumpMapinfoSectionToFile(mi, reader, outputDirPath);
+          }
+
+          string filePath = System.IO.Path.Join(outputDirPath, "Summary.md");
+          using (FileStream f = new FileStream(filePath, FileMode.Create)) {
+            using (StreamWriter sw = new StreamWriter(f)) {
+              sw.WriteLine("# Mapinfo Sections");
+              sw.WriteLine();
+              sw.Write(m.ToMDTable());
+            }
+          }
+        }
+        
         // public static float FindMaxZeroTwoCoord(Old.Cols c) {
         //     return c.Colis.Aggregate(float.MinValue,
         //         (max, next) =>

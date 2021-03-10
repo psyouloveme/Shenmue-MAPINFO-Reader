@@ -66,5 +66,29 @@ namespace mapinforeader.Util
             }
             return sb.ToString();
         } 
-    }
+
+      public static bool MatchByteArrays(byte[] a, byte[] b) {
+        bool f = a.Length == b.Length;
+        for (int i = 0; i < a.Length && i < b.Length; ++i)
+        {
+          f &= a[i] == b[i];
+        }
+        return f;
+      }
+
+      /// https://stackoverflow.com/questions/1395205/better-way-to-check-if-a-path-is-a-file-or-a-directory
+      public static bool IsDirectory(string path) {
+        // get the file attributes for file or directory
+        FileAttributes attr = File.GetAttributes(path);
+        //detect whether its a directory or file
+        if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+            return true;
+        else
+          return false;
+      }
+
+      public static bool FileExists(string path) {
+        return File.Exists(path);
+      }
+  }
 }

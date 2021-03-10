@@ -19,6 +19,45 @@
             "stopAtEntry": false
         },
         {
+          "name": "Debug Split D000",
+          "type": "coreclr",
+          "request": "launch",
+          "preLaunchTask": "build",
+          // If you have changed target frameworks, make sure to update the program path.
+          "program": "${workspaceFolder}/bin/Debug/net5.0/mapinforeader.dll",
+          "args": [ "-s", ".\\D000_Dump\\", "..\\SCENE\\01\\D000\\MAPINFO.BIN.bytes" ],
+          "cwd": "${workspaceFolder}",
+          // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+          "console": "internalConsole",
+          "stopAtEntry": false
+        },
+        {
+          "name": "Debug Split MFSY",
+          "type": "coreclr",
+          "request": "launch",
+          "preLaunchTask": "build",
+          // If you have changed target frameworks, make sure to update the program path.
+          "program": "${workspaceFolder}/bin/Debug/net5.0/mapinforeader.dll",
+          "args": [ "-s", ".\\MFSY_Dump\\",  "..\\SCENE\\02\\MFSY\\MAPINFO.BIN.bytes" ],
+          "cwd": "${workspaceFolder}",
+          // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+          "console": "internalConsole",
+          "stopAtEntry": false
+        },
+        {
+          "name": "Debug Split COLIS",
+          "type": "coreclr",
+          "request": "launch",
+          "preLaunchTask": "build",
+          // If you have changed target frameworks, make sure to update the program path.
+          "program": "${workspaceFolder}/bin/Debug/net5.0/mapinforeader.dll",
+          "args": [ "-s", ".\\MFSY_Dump\\COLS", "--cols", ".\\MFSY_Dump\\COLS.bin" ],
+          "cwd": "${workspaceFolder}",
+          // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+          "console": "internalConsole",
+          "stopAtEntry": false
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
